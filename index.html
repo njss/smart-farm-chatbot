@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shamba Smart · Farmer advisory chatbot</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">🌱</span>
+      <div>
+        <h1>Shamba Smart</h1>
+        <p class="sub" data-i18n="tagline">Farm advice from live sensor data</p>
+      </div>
+    </div>
+    <div class="controls">
+      <label><span data-i18n="farm">Farm</span>
+        <input id="farm" value="iringa-demo" spellcheck="false" size="12">
+      </label>
+      <label><span data-i18n="crop">Crop</span>
+        <select id="crop">
+          <option value="maize">Maize / Mahindi</option>
+          <option value="beans">Beans / Maharage</option>
+          <option value="tomato">Tomato / Nyanya</option>
+          <option value="potato">Potato / Viazi</option>
+          <option value="sunflower">Sunflower / Alizeti</option>
+          <option value="vegetables">Vegetables / Mbogamboga</option>
+        </select>
+      </label>
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" data-lang="en" class="on">EN</button>
+        <button type="button" data-lang="sw">SW</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="panel sensors" aria-labelledby="sensors-h">
+      <div class="panel-head">
+        <h2 id="sensors-h" data-i18n="live">Live sensors</h2>
+        <span id="conn" class="pill off">connecting…</span>
+      </div>
+      <div class="grid" id="cards">
+        <div class="card" data-key="soil_moisture"><span class="k" data-i18n="soil_moisture">Soil moisture</span><span class="v">–</span><span class="u">%</span></div>
+        <div class="card" data-key="air_temperature"><span class="k" data-i18n="air_temperature">Air temperature</span><span class="v">–</span><span class="u">°C</span></div>
+        <div class="card" data-key="air_humidity"><span class="k" data-i18n="air_humidity">Air humidity</span><span class="v">–</span><span class="u">%</span></div>
+        <div class="card" data-key="soil_temperature"><span class="k" data-i18n="soil_temperature">Soil temperature</span><span class="v">–</span><span class="u">°C</span></div>
+        <div class="card" data-key="light"><span class="k" data-i18n="light">Light</span><span class="v">–</span><span class="u">lux</span></div>
+        <div class="card" data-key="rainfall"><span class="k" data-i18n="rainfall">Rainfall</span><span class="v">–</span><span class="u">mm/h</span></div>
+      </div>
+      <p class="meta"><span id="stamp">–</span> · <span data-i18n="pump">Pump</span>: <b id="pump">–</b>
+        <button type="button" id="pumpBtn" class="small" disabled data-i18n="toggle_pump">Toggle pump</button></p>
+
+      <details class="manual">
+        <summary data-i18n="manual">No sensors? Enter values by hand</summary>
+        <form id="manualForm">
+          <label><span data-i18n="soil_moisture">Soil moisture</span> (%) <input name="soil_moisture" type="number" step="0.1" value="20"></label>
+          <label><span data-i18n="air_temperature">Air temperature</span> (°C) <input name="air_temperature" type="number" step="0.1" value="30"></label>
+          <label><span data-i18n="air_humidity">Air humidity</span> (%) <input name="air_humidity" type="number" step="0.1" value="45"></label>
+          <label><span data-i18n="rainfall">Rainfall</span> (mm/h) <input name="rainfall" type="number" step="0.1" value="0"></label>
+          <button type="submit" data-i18n="use_values">Use these values</button>
+        </form>
+      </details>
+
+      <h3 data-i18n="findings">What the rules see</h3>
+      <ul id="findings" class="findings"></ul>
+    </section>
+
+    <section class="panel chat" aria-labelledby="chat-h">
+      <div class="panel-head">
+        <h2 id="chat-h" data-i18n="ask">Ask the advisor</h2>
+        <span id="mode" class="pill">…</span>
+      </div>
+      <div id="log" class="log" aria-live="polite"></div>
+      <div class="chips" id="chips"></div>
+      <form id="ask" class="ask">
+        <input id="q" autocomplete="off" data-i18n-ph="placeholder" placeholder="Type your question…">
+        <button type="submit" data-i18n="send">Send</button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <span data-i18n="footer">Advice is generated from sensor data and simple rules. Always check with your extension officer.</span>
+  </footer>
+
+  <script src="vendor/mqtt.min.js"></script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
